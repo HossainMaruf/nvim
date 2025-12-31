@@ -1,6 +1,5 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
-
 require("lazy").setup({
 
     -- Theme
@@ -8,7 +7,7 @@ require("lazy").setup({
      "folke/tokyonight.nvim",
      priority = 1000, -- load first
      config = function()
-     vim.cmd.colorscheme("tokyonight")
+    vim.cmd.colorscheme("tokyonight")
      end, 
     },
 
@@ -39,7 +38,58 @@ require("lazy").setup({
         -- gcc for single line toggle commenting
         -- gc for visual selection and toggle commenting
      },
+     {
+         "folke/which-key.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("which-key").setup {
+                -- your options go here (optional)
+                plugins = {
+                    marks = true,       -- show marks
+                    registers = true,   -- show registers
+                    spelling = {
+                        enabled = true,
+                        suggestions = 20,
+                    },
+                },
+                key_labels = {},
+                icons = {
+                    breadcrumb = "»",
+                    separator = "➜",
+                    group = "+",
+                },
+                window = {
+                    border = "rounded",
+                    position = "bottom",
+                    margin = {1,0,1,0},
+                    padding = {2,2,2,2},
+                },
+                layout = {
+                    height = {min = 4, max = 25},
+                    width = {min = 20, max = 50},
+                    spacing = 3,
+                },
+            }
 
+            -- Example keybinding registration
+            local wk = require("which-key")
+             wk.register({
+                f = {
+                    name = "File",
+                    f = "Find File",
+                    r = "Recent Files",
+                },
+                b = {
+                    name = "Buffer",
+                    d = "Delete Buffer",
+                    n = "Next Buffer",
+                },
+                w = { name = "Write" },
+                q = { name = "Quit"},
+                t = { name = "Tab / Terminal"}
+            }, { prefix = "<leader>" }) 
+        end,
+     },
     -- Fuzzy finder
      {
   "nvim-telescope/telescope.nvim",
