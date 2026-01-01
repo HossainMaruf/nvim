@@ -19,6 +19,8 @@ require("lazy").setup({
     require("nvim-tree").setup({
         view = {width = 30, side = "left"},
         renderer = { icons = { show = { file = true, folder = true, folder_arrow = true, }, }, },
+        -- git = { enable = true, ignore = true },
+        filters = { git_ignored = false, dotfiles = false }
     })
     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
   end,
@@ -39,7 +41,8 @@ require("lazy").setup({
         -- gc for visual selection and toggle commenting
      },
      {
-         "folke/which-key.nvim",
+        "folke/which-key.nvim",
+        enabled = false,
         event = "VeryLazy",
         config = function()
             require("which-key").setup {
@@ -105,15 +108,17 @@ require("lazy").setup({
         },
         sorting_strategy = "ascending",
         file_ignore_patterns = {
-            "%.git/*", -- ignore .git directory
+            "%.git/*", -- Git
             "node_modules/*", -- Node
-            "target/*", -- Maven
             "build/*", -- Gradle
+            "target/*", -- Maven
             "%.github/*",
             "%.settings/*",
             "%.vscode/*",
             "%.classpath/*",
-            "%.project/*"
+            "%.project/*",
+            "%.mvn/*",
+            "%*.exe"
         }
     },
     })
@@ -163,7 +168,7 @@ require("lazy").setup({
     },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "jdtls" },
+        ensure_installed = {}, -- list of preinstalled lsp
       })
     end,
   },
