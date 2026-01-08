@@ -11,6 +11,16 @@ require("lazy").setup({
      end, 
     },
 
+    -- Icons (Need to install Nerd Font - I am using CaskaydiaMono Nerd Font and Font Size 14)
+    {
+       "nvim-tree/nvim-web-devicons",
+       config = function()
+           require("nvim-web-devicons").setup({
+               default = true;
+           })
+       end,
+    },
+
     -- File explorer
      {
   "nvim-tree/nvim-tree.lua",
@@ -20,7 +30,7 @@ require("lazy").setup({
         view = {width = 30, side = "left"},
         renderer = { icons = { show = { file = true, folder = true, folder_arrow = true, }, }, },
         -- git = { enable = true, ignore = true },
-        filters = { git_ignored = false, dotfiles = false }
+        filters = { git_ignored = false, dotfiles = false },
     })
     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
   end,
@@ -31,7 +41,9 @@ require("lazy").setup({
      {
       "nvim-lualine/lualine.nvim",
       config = function()
-      require("lualine").setup()
+      require("lualine").setup({
+          options = { icons_enabled = true,}
+      })
       end,
      },
      {
