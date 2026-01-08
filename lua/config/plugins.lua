@@ -149,6 +149,10 @@ require("lazy").setup({
         "cpp",
         "java",
         "lua",
+        "html",
+        "css",
+        "jsx",
+        "tsx",
         "javascript",
         "typescript",
         "sql",
@@ -194,14 +198,30 @@ require("lazy").setup({
     },
   },
   {
- "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-        require("nvim-autopairs").setup({
-            check_ts = true,   -- enable treesitter
-            enable_check_bracket_line = false,
+     "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup({
+                check_ts = true,   -- enable treesitter
+                enable_check_bracket_line = false,
+            })
+        end,
+  },
+  -- auto close tag
+  {
+    "nvim-ts-autotag",
+      config = function()
+        require("nvim-ts-autotag").setup({
+            opts = {
+                enable_close = true, -- Auto close tags
+                enable_rename = true, -- Auto rename pairs of tags
+                enable_close_on_slash = false -- Auto close on trailing </
+            },
+            per_filetype = {
+                
+            }
         })
-    end,
+      end,
   },
   {
     "folke/flash.nvim",
