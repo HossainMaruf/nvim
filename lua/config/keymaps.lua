@@ -6,16 +6,38 @@ local keymap = vim.keymap.set
 keymap("n", "<leader>w", ":w<CR>") -- write in file
 keymap("n", "<leader>q", ":q<CR>") -- close the window
 
+-- ============================ TAB START =================================
+keymap("n", "tn", ":tabnew<CR>") -- New Tab
+
+keymap("n", "tgn", ":tabnext<CR>") -- go to next tab (DEFAULT: gt)
+keymap("n", "tgp", ":tabprevious<CR>") -- go to previous tab (DEFAULT: gT)
+keymap("n", "tga", ":tabfirst<CR>") -- go to first tab
+keymap("n", "tge", ":tablast<CR>") -- go to last tab
+
+keymap("n", "tmn", ":tabmove +1<CR>") -- move tab to next
+keymap("n", "tmp", ":tabmove -1<CR>") -- move tab to previous
+keymap("n", "tma", ":tabmove 0<CR>") -- move tab to first position
+keymap("n", "tme", ":tabmove<CR>") -- move tab to last position
+
+keymap("n", "tc", ":tabclose<CR>") -- close the current tab and all its windows
+keymap("n", "tC", ":tabonly<CR>") -- close all tabs except for the current one 
+keymap("n", "tq", ":tabdo q<CR>") -- command - run the command on all tabs
+
+vim.keymap.set("n", "tm", function()
+  local input = vim.fn.input("Move Tab To Index: ")
+  if input == "" then return end
+  vim.cmd("tabm " .. input)
+end, { desc = "Move Tab (prompt)" })
+
+
+-- ============================ TAB END =================================
+
 -- Splitting window
 keymap("n", "<leader>hs", ":split<CR>")
 keymap("n", "<leader>vs", ":vsplit<CR>")
-keymap("n", "<leader>tn", ":tabnew<CR>")
-keymap("n", "<leader>tq", ":tabclose<CR>")
-keymap("n", "<leader>ti", ":tabnext<CR>")
-keymap("n", "<leader>to", ":tabprev<CR>")
 
 -- Terminal
-keymap("n", "<leader>tt", ":tabnew | terminal<CR>")
+keymap("n", "tt", ":tabnew | terminal<CR>")
 keymap("n", "<leader>th", ":split | terminal<CR>")
 keymap("n", "<leader>tv", ":vsplit | terminal<CR>")
 keymap("t", "<ESC>", "<C-\\><C-n>")
