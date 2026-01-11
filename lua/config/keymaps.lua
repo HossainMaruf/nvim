@@ -2,9 +2,42 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap.set
 
--- File Operations
+-- ============================ BASIC MAPPING START =================================
+keymap("i", "jk", "<ESC>") -- Go to NORMAL Mode
+keymap("i", "kj", "<ESC>") -- Go to NORMAL Mode
 keymap("n", "<leader>w", ":w<CR>") -- write in file
 keymap("n", "<leader>q", ":q<CR>") -- close the window
+keymap("n", "<leader>nh", ":nohl<CR>") -- clear the highlight
+-- ============================ BASIC MAPPING END =================================
+
+-- ============================ BUFFER START =================================
+keymap("n", "<leader>bl", ":buffers<CR>") -- list all open buffers
+keymap("n", "<leader>bt", ":tab ball<CR>") -- edit all buffers as tabs
+keymap("n", "<leader>bw", ":vertical ball<CR>") -- edit all buffers as vertical windows
+keymap("n", "<leader>bn", ":bnext<CR>") -- go to next buffer
+keymap("n", "<leader>bp", ":bprevious<CR>") -- go to previous buffer
+keymap("n", "<leader>bd", ":bdelete<CR>") -- delete the buffer
+-- ============================ BUFFER END =================================
+
+-- =========================== WINDOW START =================================
+-- Window Navigation
+keymap("n", "<C-h>", "<C-w>h") -- move cursor to the left window
+keymap("n", "<C-l>", "<C-w>l") -- move cursor to the right window
+keymap("n", "<C-j>", "<C-w>j") -- move cursor to the down window
+keymap("n", "<C-k>", "<C-w>k") -- move cursor to the up window
+keymap("n", "<C-e>", "<C-w>=") -- make all windows equal height and width
+keymap("n", "<C-x>", "<C-w>x") -- exchange current window with next one 
+
+-- Resizing Window
+keymap("n", "<M-j>", ":resize -2<CR>") -- decrease horizontal window size
+keymap("n", "<M-k>", ":resize +2<CR>") -- increase horizontal window size
+keymap("n", "<M-h>", ":vertical resize -2<CR>") -- decrease vertical window size
+keymap("n", "<M-l>", ":vertical resize +2<CR>") -- increase vertical window size
+
+-- Splitting Window
+keymap("n", "<leader>hs", ":split<CR>") -- split window horizontally
+keymap("n", "<leader>vs", ":vsplit<CR>") -- split window vertically
+-- ============================ WINDOW END =================================
 
 -- ============================ TAB START =================================
 vim.o.showtabline = 2
@@ -63,11 +96,7 @@ keymap("n", "tC", ":tabonly<CR>") -- close all tabs except for the current one
 keymap("n", "tq", ":tabdo q<CR>") -- command - run the command on all tabs
 -- ============================ TAB END =================================
 
--- Splitting window
-keymap("n", "<leader>hs", ":split<CR>")
-keymap("n", "<leader>vs", ":vsplit<CR>")
-
--- Terminal
+-- ============================ TERMINAL START =================================
 keymap("n", "tt", ":tabnew | terminal<CR>")
 keymap("n", "<leader>th", ":split | terminal<CR>")
 keymap("n", "<leader>tv", ":vsplit | terminal<CR>")
@@ -77,45 +106,22 @@ keymap("t", "<C-h>", "<C-\\><C-n><C-w>h")
 keymap("t", "<C-j>", "<C-\\><C-n><C-w>j")
 keymap("t", "<C-k>", "<C-\\><C-n><C-w>k")
 keymap("t", "<C-l>", "<C-\\><C-n><C-w>l")
+-- ============================ TERMINAL END =================================
 
--- Window navigation
-keymap("n", "<C-h>", "<C-w>h")
-keymap("n", "<C-l>", "<C-w>l")
-keymap("n", "<C-j>", "<C-w>j")
-keymap("n", "<C-k>", "<C-w>k")
-
--- Resizing window
-keymap("n", "<M-j>", ":resize -2<CR>")
-keymap("n", "<M-k>", ":resize +2<CR>")
-keymap("n", "<M-h>", ":vertical resize -2<CR>")
-keymap("n", "<M-l>", ":vertical resize +2<CR>")
-
--- I hate ekscape more than anything else
-keymap("i", "jk", "<ESC>")
-keymap("i", "kj", "<ESC>")
-
--- Easy CAPS
-keymap("n", "<C-u>", "viwU<ESC>")
-keymap("i", "<C-u>", "<ESC>viwUi")
-
--- Change the buffer
-keymap("n", "<TAB>", ":bnext<CR>")
-keymap("n", "<S-TAB>", ":bprevious<CR>")
-
--- Better Tabbing
+-- ============================ INDENTATION START =================================
 keymap("v", "<", "<gv")
 keymap("v", ">", ">gv")
+-- ============================ INDENTATION END =================================
 
--- Clear search highlight
-keymap("n", "<leader>nh", ":nohl<CR>")
+-- ============================ DIAGNOSTIC START =================================
+keymap("n", "<leader>E", vim.diagnostic.open_float) -- Show error message in floating window
+keymap("n", "]e", vim.diagnostic.goto_next) -- Go to next error
+keymap("n", "[e", vim.diagnostic.goto_prev) -- Go to previous error
+-- ============================ DIAGNOSTIC END =================================
 
--- Not so essential
-keymap("n", "<leader>o", "o<ESC>^Da")
-keymap("n", "<leader>O", "O<ESC>^Da")
-
--- Show error message in floating window
-vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float)
-
--- Go to next/previous error
-vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
+-- ============================ VIMGREP START =================================
+keymap("n", "nn", ":cnext<CR>") -- jump to the next match
+keymap("n", "np", ":cprevious<CR>") -- jump to the previous match
+keymap("n", "no", ":copen<CR>") -- open a window containing the list of matches
+keymap("n", "nl", ":cclose<CR>") -- close the quickfix window
+-- ============================ VIMGREP END =================================
