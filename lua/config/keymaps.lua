@@ -7,29 +7,60 @@ keymap("n", "<leader>w", ":w<CR>") -- write in file
 keymap("n", "<leader>q", ":q<CR>") -- close the window
 
 -- ============================ TAB START =================================
+vim.o.showtabline = 2
+vim.o.mouse = "a"
+vim.o.tabline = "%!v:lua.MyTabLine()"
+
+function _G.MyTabLine()
+  local s = ""
+  local current = vim.fn.tabpagenr()
+  for i = 1, vim.fn.tabpagenr("$") do
+    local is_current = (i == current)
+    local hl = is_current and "%#TabLineSel#" or "%#TabLine#"
+    -- highlight
+    s = s .. hl
+    -- CLICK: go to tab
+    s = s .. "%" .. i .. "T"
+    -- active buffer in tab
+    local winnr = vim.fn.tabpagewinnr(i)
+    local buflist = vim.fn.tabpagebuflist(i)
+    local buf = buflist[winnr]
+    -- filename
+    local name = vim.fn.fnamemodify(vim.fn.bufname(buf), ":t")
+    if name == "" then name = "[No Name]" end
+    -- modified indicator
+    if vim.bo[buf].modified then
+      name = name .. " ●"
+    end
+    -- display
+    s = s .. " " .. i .. ":" .. name .. " "
+  end
+  -- reset
+  s = s .. "%#TabLineFill#%T"
+  return s
+end
+
 keymap("n", "tn", ":tabnew<CR>") -- New Tab
 
-keymap("n", "tgn", ":tabnext<CR>") -- go to next tab (DEFAULT: gt)
-keymap("n", "tgp", ":tabprevious<CR>") -- go to previous tab (DEFAULT: gT)
-keymap("n", "tga", ":tabfirst<CR>") -- go to first tab
-keymap("n", "tge", ":tablast<CR>") -- go to last tab
+keymap("n", "tk", ":tabnext<CR>") -- go to next tab (DEFAULT: gt)
+keymap("n", "tj", ":tabprevious<CR>") -- go to previous tab (DEFAULT: gT)
+keymap("n", "th", ":tabfirst<CR>") -- go to first tab
+keymap("n", "tl", ":tablast<CR>") -- go to last tab
+-- For go to a specific tab we can use (TabNumber-gt) command i.e 4gt, 7gt etc
 
-keymap("n", "tmn", ":tabmove +1<CR>") -- move tab to next
-keymap("n", "tmp", ":tabmove -1<CR>") -- move tab to previous
-keymap("n", "tma", ":tabmove 0<CR>") -- move tab to first position
-keymap("n", "tme", ":tabmove<CR>") -- move tab to last position
-
-keymap("n", "tc", ":tabclose<CR>") -- close the current tab and all its windows
-keymap("n", "tC", ":tabonly<CR>") -- close all tabs except for the current one 
-keymap("n", "tq", ":tabdo q<CR>") -- command - run the command on all tabs
-
-vim.keymap.set("n", "tm", function()
+keymap("n", "tmk", ":tabmove +1<CR>") -- move tab to next
+keymap("n", "tmj", ":tabmove -1<CR>") -- move tab to previous
+keymap("n", "tmh", ":tabmove 0<CR>") -- move tab to first position
+keymap("n", "tml", ":tabmove<CR>") -- move tab to last position
+keymap("n", "tm", function()
   local input = vim.fn.input("Move Tab To Index: ")
   if input == "" then return end
   vim.cmd("tabm " .. input)
 end, { desc = "Move Tab (prompt)" })
 
-
+keymap("n", "tc", ":tabclose<CR>") -- close the current tab and all its windows
+keymap("n", "tC", ":tabonly<CR>") -- close all tabs except for the current one 
+keymap("n", "tq", ":tabdo q<CR>") -- command - run the command on all tabs
 -- ============================ TAB END =================================
 
 -- Splitting window
