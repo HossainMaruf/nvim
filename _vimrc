@@ -54,7 +54,7 @@ nnoremap tq :tabdo q<CR>
 nnoremap tt :terminal<CR>
 nnoremap <leader>th :split \| terminal<CR>
 nnoremap <leader>tv :vsplit \| terminal<CR>
-tnoremap <ESC> <C-\\><C-n>
+tnoremap <ESC> <C-\><C-n>
 "------------------------- TERMINAL END --------------------------------
 
 "------------------------- WINDOW START --------------------------------
@@ -76,3 +76,12 @@ nnoremap <M-l> :vertical resize +2<CR>
 nnoremap <C-e> <C-w>= "make all windows equal height and width
 nnoremap <C-x> <C-w>x "exchange current window with next one
 "------------------------- WINDOW END --------------------------------
+
+"PLUGIN MANAGER (vim-plug)
+"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"Place plug.vim in $HOME/vimfiles/autoload/plug.vim
+
+call plug#begin()
+
+
+call plug#end()
