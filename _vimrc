@@ -16,6 +16,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+set encoding=UTF-8
 "set clipboard=unnamedplus
 
 set guioptions-=m "disable menubar
@@ -84,4 +85,21 @@ nnoremap <C-x> <C-w>x "exchange current window with next one
 call plug#begin()
 
 
+" On-demand loading: loaded when the specified command is executed
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+
+" Use 'dir' option to install plugin in a non-default directory
+Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+
+" Post-update hook: run a shell command after installing or updating the plugin
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Post-update hook can be a lambda expression
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
+
+
+nnoremap <leader>e :NERDTreeToggle<CR>
