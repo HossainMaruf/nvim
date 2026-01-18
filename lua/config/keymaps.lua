@@ -37,6 +37,7 @@ keymap("n", "<M-l>", ":vertical resize +2<CR>") -- increase vertical window size
 -- Splitting Window
 keymap("n", "<leader>hs", ":split<CR>") -- split window horizontally
 keymap("n", "<leader>vs", ":vsplit<CR>") -- split window vertically
+keymap("n", "<leader>k", ":only<CR>") -- close other windows except focused one
 -- ============================ WINDOW END =================================
 
 -- ============================ TAB START =================================

@@ -1,16 +1,6 @@
     vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
     require("lazy").setup({
-
-        -- Theme
-        { 
-         "folke/tokyonight.nvim",
-         priority = 1000, -- load first
-         config = function()
-        vim.cmd.colorscheme("tokyonight")
-         end, 
-        },
-
         -- Icons (Need to install Nerd Font - I am using CaskaydiaMono Nerd Font and Font Size 14)
         {
            "nvim-tree/nvim-web-devicons",
