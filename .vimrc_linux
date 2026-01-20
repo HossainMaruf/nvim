@@ -1,0 +1,122 @@
+syntax on "detect language syntax
+filetype plugin indent on
+colorscheme delek
+
+set number "set line number
+set relativenumber "set relative line number
+set nocompatible
+set ruler
+set showcmd
+set hidden
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set showtabline=2
+set encoding=UTF-8
+set cursorline
+set linespace=2
+set mouse=a
+set clipboard=unnamedplus
+
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
+set nobackup
+set nowb
+set noswapfile
+
+let mapleader = " "
+
+"------------------------- BASIC START --------------------------------
+inoremap jk <ESC>
+inoremap kj <ESC>
+nnoremap <leader>w :w!<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>nh :noh<CR>
+"------------------------- BASIC END --------------------------------
+
+"------------------------- BUFFER START --------------------------------
+nnoremap <leader>bb :buffers<CR>
+nnoremap <leader>bk :bnext<CR>
+nnoremap <leader>bj :bprevious<CR>
+nnoremap <leader>bh :bfirst<CR>
+nnoremap <leader>bl :blast<CR>
+
+nnoremap <leader>bd :bdelete<CR>
+
+nnoremap <leader>bt :tab ball<CR>
+nnoremap <leader>bw :vertical ball<CR>
+"------------------------- BUFFER END --------------------------------
+
+"------------------------- TAB START --------------------------------
+nnoremap tn :tabnew<CR>
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprevious<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+
+nnoremap tmk :tabmove +1<CR>
+nnoremap tmj :tabmove -1<CR>
+nnoremap tmh :tabmove 0<CR>
+nnoremap tml :tabmove<CR>
+
+nnoremap tc :tabclose<CR>
+nnoremap to :tabonly<CR>
+nnoremap tq :tabdo q<CR>
+"------------------------- TAB END --------------------------------
+
+"------------------------- TERMINAL START --------------------------------
+nnoremap tt :terminal<CR>
+tnoremap <ESC> <C-\><C-n>
+"Escape From Terminal
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+"------------------------- TERMINAL END --------------------------------
+
+"------------------------- WINDOW START --------------------------------
+"Window Splitting
+nnoremap <leader>vs :vsplit<CR>
+nnoremap <leader>s :split<CR>
+
+"Close Other Windows Except Focused One
+nnoremap <leader>x :only<CR>
+
+"Window Navigation
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+
+"Window Resizing
+nnoremap <C-j> :resize -2<CR>
+nnoremap <C-k> :resize +2<CR>
+nnoremap <C-h> :vertical resize -2<CR>
+nnoremap <C-l> :vertical resize +2<CR>
+nnoremap <C-e> <C-w>=
+nnoremap <C-x> <C-w>x
+"------------------------- WINDOW END --------------------------------
+
+"------------------------- INDENTATION START --------------------------------
+vnoremap < <gv
+vnoremap > >gv
+"------------------------- INDENTATION END --------------------------------
+
+"------------------------- VIMGREP START --------------------------------
+nnoremap nn :cnext<CR>
+nnoremap np :cprevious<CR>
+nnoremap no :copen<CR>
+nnoremap nl :cclose<CR>
+"------------------------- VIMGREP END --------------------------------
+
+"PLUGIN MANAGER (vim-plug)
+"https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"Place plug.vim in $HOME/.vim/autoload/plug.vim
+
+call plug#begin()
+
+call plug#end()

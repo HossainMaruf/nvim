@@ -18,7 +18,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.termguicolors = true -- for file, folder icons
-vim.cmd.colorscheme("desert") -- picked from default theme list of neovim
+vim.cmd.colorscheme("delek") -- picked from default theme list of neovim
 
 vim.diagnostic.config({
     virtual_text = true,

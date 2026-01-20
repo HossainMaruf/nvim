@@ -11,12 +11,14 @@ keymap("n", "<leader>nh", ":nohl<CR>") -- clear the highlight
 -- ============================ BASIC MAPPING END =================================
 
 -- ============================ BUFFER START =================================
-keymap("n", "<leader>bl", ":buffers<CR>") -- list all open buffers
+keymap("n", "<leader>bb", ":buffers<CR>") -- list all open buffers
+keymap("n", "<leader>bk", ":bnext<CR>") -- go to next buffer
+keymap("n", "<leader>bj", ":bprevious<CR>") -- go to previous buffer
+keymap("n", "<leader>bh", ":bfirst<CR>") -- go to first buffer
+keymap("n", "<leader>bl", ":blast<CR>") -- go to last buffer
+keymap("n", "<leader>bd", ":bdelete<CR>") -- delete the buffer
 keymap("n", "<leader>bt", ":tab ball<CR>") -- edit all buffers as tabs
 keymap("n", "<leader>bw", ":vertical ball<CR>") -- edit all buffers as vertical windows
-keymap("n", "<leader>bn", ":bnext<CR>") -- go to next buffer
-keymap("n", "<leader>bp", ":bprevious<CR>") -- go to previous buffer
-keymap("n", "<leader>bd", ":bdelete<CR>") -- delete the buffer
 -- ============================ BUFFER END =================================
 
 -- =========================== WINDOW START =================================
@@ -37,7 +39,7 @@ keymap("n", "<M-l>", ":vertical resize +2<CR>") -- increase vertical window size
 -- Splitting Window
 keymap("n", "<leader>hs", ":split<CR>") -- split window horizontally
 keymap("n", "<leader>vs", ":vsplit<CR>") -- split window vertically
-keymap("n", "<leader>k", ":only<CR>") -- close other windows except focused one
+keymap("n", "<leader>x", ":only<CR>") -- close other windows except focused one
 -- ============================ WINDOW END =================================
 
 -- ============================ TAB START =================================
@@ -93,7 +95,7 @@ keymap("n", "tm", function()
 end, { desc = "Move Tab (prompt)" })
 
 keymap("n", "tc", ":tabclose<CR>") -- close the current tab and all its windows
-keymap("n", "tC", ":tabonly<CR>") -- close all tabs except for the current one 
+keymap("n", "to", ":tabonly<CR>") -- close all tabs except for the current one 
 keymap("n", "tq", ":tabdo q<CR>") -- command - run the command on all tabs
 -- ============================ TAB END =================================
 
