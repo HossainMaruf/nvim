@@ -17,7 +17,12 @@
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
         require("nvim-tree").setup({
-            view = {width = 30, side = "left"},
+            view = {
+                width = 30, 
+                side = "left", 
+                adaptive_size = false,
+                preserve_window_proportions = true
+            },
             renderer = { icons = { show = { file = true, folder = true, folder_arrow = true, }, }, },
             -- git = { enable = true, ignore = true },
             filters = { git_ignored = false, dotfiles = false },
