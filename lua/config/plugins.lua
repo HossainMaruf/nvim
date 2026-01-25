@@ -1,13 +1,13 @@
-    vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy.nvim")
 
-    require("lazy").setup({
-        -- Icons (Need to install Nerd Font - I am using CaskaydiaMono Nerd Font and Font Size 14)
-        {
-           "nvim-tree/nvim-web-devicons",
-           config = function()
-               require("nvim-web-devicons").setup({
-                   default = true;
-               })
+require("lazy").setup({
+    -- Icons (Need to install Nerd Font - I am using CaskaydiaMono Nerd Font and Font Size 14)
+    {
+        "nvim-tree/nvim-web-devicons",
+        config = function()
+            require("nvim-web-devicons").setup({
+                default = true;
+            })
            end,
         },
 
