@@ -1,6 +1,6 @@
 require("config.options")
-require("config.keymaps")
 require("config.plugins") -- using lazy.nvim
+require("config.keymaps")
 require("config.lsp")
 require("config.cmp")
 

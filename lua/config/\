@@ -120,20 +120,6 @@ keymap("v", ">", ">gv")
 keymap("n", "<leader>E", vim.diagnostic.open_float) -- Show error message in floating window
 keymap("n", "]d", vim.diagnostic.goto_next) -- Go to next error
 keymap("n", "[d", vim.diagnostic.goto_prev) -- Go to previous error
-
-vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = true,
-})
-
-vim.api.nvim_create_autocmd("CursorHold", {
-    callback = function()
-        vim.diagnostic.open_float(nil, { focus = false })
-    end,
-})
 -- ============================ DIAGNOSTIC END =================================
 
 -- ============================ VIMGREP START =================================
@@ -150,16 +136,14 @@ keymap("n", "<leader>e", ":NvimTreeToggle<CR>")
 
 
 -- ============================ TELESCOPE START =================================
-keymap("n", "<leader>ff", ":Telescope find_files<CR>")
-keymap("n", "<leader>fg", ":Telescope live_grep<CR>")
-keymap("n", "<leader>fb", ":Telescope buffers<CR>")
-keymap("n", "<leader>fm", ":Telescope marks<CR>")
-keymap("n", "<leader>fr", ":Telescope lsp_references<CR>")
-keymap("n", "<leader>fr", ":Telescope registers<CR>")
-keymap("n", "<leader>fs", ":Telescope lsp_document_symbols<CR>")
-keymap("n", "<leader>fc", ":Telescope lsp_incoming_calls<CR>")
-keymap("n", "<leader>fo", ":Telescope lsp_outgoing_calls<CR>")
-keymap("n", "<leader>fi", ":Telescope lsp_implementations<CR>")
-keymap("n", "<leader>fx", ":Telescope diagnostics bufnr=0<CR>")
-keymap("n", "<leader>ft", ":Telescope builtin<CR>")
+-- keymap("n", "<leader>ff", require("telescope.builtin").find_files)
+-- keymap("n", "<leader>fg", require("telescope.builtin").live_grep)
+keymap("n", "<leader>fb", ":Telescope buffers<CR>", "Find buffer")
+keymap("n", "<leader>fm", "<cmd>Telescope marks<cr>", "Find mark")
+keymap("n", "<leader>fr", "<cmd>Telescope lsp_references<cr>", "Find references (LSP)")
+keymap("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", "Find symbols (LSP)")
+keymap("n", "<leader>fc", "<cmd>Telescope lsp_incoming_calls<cr>", "Find incoming calls (LSP)")
+keymap("n", "<leader>fo", "<cmd>Telescope lsp_outgoing_calls<cr>", "Find outgoing calls (LSP)")
+keymap("n", "<leader>fi", "<cmd>Telescope lsp_implementations<cr>", "Find implementations (LSP)")
+keymap("n", "<leader>fx", "<cmd>Telescope diagnostics bufnr=0<cr>", "Find errors (LSP)")
 -- ============================ TELESCOPE END =================================

@@ -19,18 +19,3 @@ vim.opt.splitbelow = true
 
 vim.opt.termguicolors = true -- for file, folder icons
 vim.cmd.colorscheme("delek") -- picked from default theme list of neovim
-
-vim.diagnostic.config({
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = true,
-})
-
-vim.api.nvim_create_autocmd("CursorHold", {
-    callback = function()
-        vim.diagnostic.open_float(nil, { focus = false })
-    end,
-})
-

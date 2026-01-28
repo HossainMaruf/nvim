@@ -27,7 +27,6 @@ require("lazy").setup({
             -- git = { enable = true, ignore = true },
             filters = { git_ignored = false, dotfiles = false },
         })
-        vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
       end,
     },
 
@@ -129,8 +128,6 @@ require("lazy").setup({
             }
         },
         })
-        vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
-        vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
       end,
     },
 
