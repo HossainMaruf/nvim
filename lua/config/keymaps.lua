@@ -43,39 +43,6 @@ keymap("n", "<leader>x", ":only<CR>") -- close other windows except focused one
 -- ============================ WINDOW END =================================
 
 -- ============================ TAB START =================================
-vim.o.showtabline = 2
-vim.o.mouse = "a"
-vim.o.tabline = "%!v:lua.MyTabLine()"
-
-function _G.MyTabLine()
-  local s = ""
-  local current = vim.fn.tabpagenr()
-  for i = 1, vim.fn.tabpagenr("$") do
-    local is_current = (i == current)
-    local hl = is_current and "%#TabLineSel#" or "%#TabLine#"
-    -- highlight
-    s = s .. hl
-    -- CLICK: go to tab
-    s = s .. "%" .. i .. "T"
-    -- active buffer in tab
-    local winnr = vim.fn.tabpagewinnr(i)
-    local buflist = vim.fn.tabpagebuflist(i)
-    local buf = buflist[winnr]
-    -- filename
-    local name = vim.fn.fnamemodify(vim.fn.bufname(buf), ":t")
-    if name == "" then name = "[No Name]" end
-    -- modified indicator
-    if vim.bo[buf].modified then
-      name = name .. " ●"
-    end
-    -- display
-    s = s .. " " .. i .. ":" .. name .. " "
-  end
-  -- reset
-  s = s .. "%#TabLineFill#%T"
-  return s
-end
-
 keymap("n", "tn", ":tabnew<CR>") -- New Tab
 
 keymap("n", "tk", ":tabnext<CR>") -- go to next tab (DEFAULT: gt)
@@ -163,3 +130,10 @@ keymap("n", "<leader>fi", ":Telescope lsp_implementations<CR>")
 keymap("n", "<leader>fx", ":Telescope diagnostics bufnr=0<CR>")
 keymap("n", "<leader>ft", ":Telescope builtin<CR>")
 -- ============================ TELESCOPE END =================================
+
+
+-- ============================ ADVANCED START =================================
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") -- Move Line Down
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") -- Move Line Up
+keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Replace All Word Where Cursor Point
+-- ============================ ADVANCED END =================================

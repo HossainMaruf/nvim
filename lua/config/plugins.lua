@@ -1,7 +1,7 @@
 vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy.nvim")
 
 require("lazy").setup({
-    -- Icons (Need to install Nerd Font - I am using CaskaydiaMono Nerd Font and Font Size 14)
+    -- Need to install Nerd Font (Fira, Cascaydia etc) for working icons
     {
         "nvim-tree/nvim-web-devicons",
         config = function()
@@ -34,9 +34,126 @@ require("lazy").setup({
         -- Status line
          {
           "nvim-lualine/lualine.nvim",
+          dependencies = { 'nvim-tree/nvim-web-devicons' },
           config = function()
           require("lualine").setup({
-              options = { icons_enabled = true,}
+              theme = 'auto',
+              options =  {
+                icons_enabled = true,
+                component_separators = '',
+                section_separators = { left = '', right = ''},
+                disabled_filetypes = {
+                  statusline = {},
+                  winbar = {},
+                },
+                ignore_focus = {},
+                always_divide_middle = true,
+                always_show_tabline = true,
+                globalstatus = false,
+                refresh = {
+                  statusline = 1000,
+                  tabline = 1000,
+                  winbar = 1000,
+                  refresh_time = 16, -- ~60fps
+                  events = {
+                    'WinEnter',
+                    'BufEnter',
+                    'BufWritePost',
+                    'SessionLoadPost',
+                    'FileChangedShellPost',
+                    'VimResized',
+                    'Filetype',
+                    'CursorMoved',
+                    'CursorMovedI',
+                    'ModeChanged',
+                  },
+                }
+              },
+              sections = {
+                  lualine_a = {'mode'},
+                  lualine_b = {'branch',
+                      {
+                          'diff',
+                          -- colored = true,
+                          diff_color = {
+                              -- added = 'LuaLineDiffAdd',
+                              -- modified = 'LuaLineDiffChange',
+                              -- removed = 'LuaLineDiffDelete'
+                          },
+                          symbols = {added = '+', modified = '~', removed = '-'},
+                          source = nil,
+                      }
+                  },
+                  lualine_c = {
+                      'filesize',
+                      'filename',
+                      {
+                          'diagnostics',
+                          sections = {'error', 'warn', 'info', 'hint'},
+                          diagnostics_color = {
+                                error = 'DiagnosticError', -- Changes diagnostics' error color.
+                                warn  = 'DiagnosticWarn',  -- Changes diagnostics' warn color.
+                                info  = 'DiagnosticInfo',  -- Changes diagnostics' info color.
+                                hint  = 'DiagnosticHint',  -- Changes diagnostics' hint color.
+                          },
+                          -- symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H'},
+                          colored = true,
+                          update_in_insert = false,
+                          always_visiable = false,
+    
+                      },
+                  },
+                  lualine_x = {'fileformat', 'filetype'}, -- 'encoding', 'searchcount'
+                  lualine_y = {
+                      {
+                          'lsp_status',
+                           icon = '',
+                          symbols = {
+                            spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+                            done = '✓',
+                            separator = ' ',
+                          },
+                          ignore_lsp = {},
+                          show_name = true,
+                      },
+                      {
+
+                      }},
+                  lualine_z = {} --'location'
+              },
+              tabline = {
+                  lualine_a = {
+                      {
+                          'buffers',
+                           show_filename_only = true,   -- Shows shortened relative path when set to false.
+                           hide_filename_extension = false,   -- Hide filename extension when set to true.
+                           show_modified_status = true, -- Shows indicator when the buffer is modified.
+
+                           mode = 2, -- 0: Shows buffer name
+                                     -- 1: Shows buffer index
+                                     -- 2: Shows buffer name + buffer index
+                                     -- 3: Shows buffer number
+                                     -- 4: Shows buffer name + buffer number
+                          max_length = vim.o.columns, -- Maximum width of buffers component
+                          use_mode_colors = false,
+                          buffers_color = {
+                              active = { fg = '#FFFFFF', bg = 'BLUE', gui='italic,bold' },
+                              -- inactive = { fg = '#88AAFF', bg = 'PURPLE'},
+                          },
+                          symbols = {
+                              modified = ' ●',
+                              alternate_file = '',
+                              directory = ''
+                          }
+
+                      }
+                  },
+                  lualine_b = {},
+                  lualine_c = {},
+                  lualine_x = {},
+                  lualine_y = {},
+                  lualine_z = {}
+              }
           })
           end,
          },

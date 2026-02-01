@@ -17,5 +17,8 @@ vim.opt.smartcase = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+vim.o.showtabline = 2
+vim.o.mouse = "a"
+
 vim.opt.termguicolors = true -- for file, folder icons
 vim.cmd.colorscheme("delek") -- picked from default theme list of neovim
