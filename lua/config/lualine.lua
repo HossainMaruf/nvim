@@ -1,7 +1,6 @@
 local lualine = require('lualine')
 
 -- Color table for highlights
--- stylua: ignore
 local colors = {
   bg       = '#202328',
   fg       = '#bbc2cf',
@@ -14,6 +13,29 @@ local colors = {
   magenta  = '#c678dd',
   blue     = '#51afef',
   red      = '#ec5f67',
+}
+
+local mode_color = {
+  n = colors.red,
+  i = colors.green,
+  v = colors.blue,
+  [''] = colors.blue,
+  V = colors.blue,
+  c = colors.magenta,
+  no = colors.red,
+  s = colors.orange,
+  S = colors.orange,
+  [''] = colors.orange,
+  ic = colors.yellow,
+  R = colors.violet,
+  Rv = colors.violet,
+  cv = colors.red,
+  ce = colors.red,
+  r = colors.cyan,
+  rm = colors.cyan,
+  ['r?'] = colors.cyan,
+  ['!'] = colors.red,
+  t = colors.red,
 }
 
 local conditions = {
@@ -38,7 +60,7 @@ local config = {
     section_separators = '',
     theme = {
       -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
+      -- right section. Both are highlighted by c theme. So we
       -- are just setting default looks o statusline
       normal = { c = { fg = colors.fg, bg = colors.bg } },
       inactive = { c = { fg = colors.fg, bg = colors.bg } },
@@ -46,23 +68,65 @@ local config = {
   },
   sections = {
     -- these are to remove the defaults
-    lualine_a = {},
+    lualine_a = {
+        {
+          -- mode component
+          function()
+            return ''
+          end,
+          color = function()
+            return { fg = mode_color[vim.fn.mode()] }
+          end,
+          padding = { left = 1, right = 1 }
+      }
+    },
     lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    -- These will be filled later
     lualine_c = {},
     lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
   },
   inactive_sections = {
     -- these are to remove the defaults
     lualine_a = {},
     lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
     lualine_c = {},
     lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
   },
+  tabline = {
+    lualine_a = {
+      {
+          'buffers',
+           show_filename_only = true,   -- Shows shortened relative path when set to false.
+           hide_filename_extension = false,   -- Hide filename extension when set to true.
+           show_modified_status = true, -- Shows indicator when the buffer is modified.
+
+           mode = 2, -- 0: Shows buffer name
+                     -- 1: Shows buffer index
+                     -- 2: Shows buffer name + buffer index
+                     -- 3: Shows buffer number
+                     -- 4: Shows buffer name + buffer number
+          max_length = vim.o.columns, -- Maximum width of buffers component
+          use_mode_colors = false,
+          buffers_color = {
+              active = { fg = '#FFFFFF', bg = 'BLUE', gui='italic,bold' },
+              -- inactive = { fg = '#88AAFF', bg = 'PURPLE'},
+          },
+          symbols = {
+              modified = ' ●',
+              alternate_file = '',
+              directory = ''
+          }
+      }
+  },
+  lualine_b = {},
+  lualine_c = {},
+  lualine_x = {},
+  lualine_y = {},
+  lualine_z = {}
+  }
 }
 
 -- Inserts a component in lualine_c at left section
@@ -75,47 +139,7 @@ local function ins_right(component)
   table.insert(config.sections.lualine_x, component)
 end
 
-ins_left {
-  function()
-    return '▊'
-  end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
-  padding = { left = 0, right = 1 }, -- We don't need space before this
-}
-
-ins_left {
-  -- mode component
-  function()
-    return ''
-  end,
-  color = function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red,
-    }
-    return { fg = mode_color[vim.fn.mode()] }
-  end,
-  padding = { right = 1 },
-}
+-- ins_left 
 
 ins_left {
   -- filesize component
@@ -206,13 +230,4 @@ ins_right {
   cond = conditions.hide_in_width,
 }
 
-ins_right {
-  function()
-    return '▊'
-  end,
-  color = { fg = colors.blue },
-  padding = { left = 1 },
-}
-
--- Now don't forget to initialize lualine
 lualine.setup(config)
