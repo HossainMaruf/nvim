@@ -15,29 +15,6 @@ local colors = {
   red      = '#ec5f67',
 }
 
-local mode_color = {
-  n = colors.red,
-  i = colors.green,
-  v = colors.blue,
-  [''] = colors.blue,
-  V = colors.blue,
-  c = colors.magenta,
-  no = colors.red,
-  s = colors.orange,
-  S = colors.orange,
-  [''] = colors.orange,
-  ic = colors.yellow,
-  R = colors.violet,
-  Rv = colors.violet,
-  cv = colors.red,
-  ce = colors.red,
-  r = colors.cyan,
-  rm = colors.cyan,
-  ['r?'] = colors.cyan,
-  ['!'] = colors.red,
-  t = colors.red,
-}
-
 local conditions = {
   buffer_not_empty = function()
     return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
@@ -60,7 +37,7 @@ local config = {
     section_separators = '',
     theme = {
       -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme. So we
+      -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
       normal = { c = { fg = colors.fg, bg = colors.bg } },
       inactive = { c = { fg = colors.fg, bg = colors.bg } },
@@ -68,64 +45,49 @@ local config = {
   },
   sections = {
     -- these are to remove the defaults
-    lualine_a = {
-        {
-          -- mode component
-          function()
-            return ''
-          end,
-          color = function()
-            return { fg = mode_color[vim.fn.mode()] }
-          end,
-          padding = { left = 1, right = 1 }
-      }
-    },
+    lualine_a = {},
     lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
     lualine_y = {},
     lualine_z = {},
+    -- These will be filled later
+    lualine_c = {},
+    lualine_x = {},
   },
   inactive_sections = {
     -- these are to remove the defaults
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
     lualine_y = {},
     lualine_z = {},
+    lualine_c = {},
+    lualine_x = {},
   },
   tabline = {
-    lualine_a = {
-      {
-          'buffers',
-           show_filename_only = true,   -- Shows shortened relative path when set to false.
-           hide_filename_extension = false,   -- Hide filename extension when set to true.
-           show_modified_status = true, -- Shows indicator when the buffer is modified.
+      lualine_a = {
+            {
+              'buffers',
+               show_filename_only = true,   -- Shows shortened relative path when set to false.
+               hide_filename_extension = false,   -- Hide filename extension when set to true.
+               show_modified_status = true, -- Shows indicator when the buffer is modified.
 
-           mode = 2, -- 0: Shows buffer name
-                     -- 1: Shows buffer index
-                     -- 2: Shows buffer name + buffer index
-                     -- 3: Shows buffer number
-                     -- 4: Shows buffer name + buffer number
-          max_length = vim.o.columns, -- Maximum width of buffers component
-          use_mode_colors = false,
-          buffers_color = {
-              active = { fg = '#FFFFFF', bg = 'BLUE', gui='italic,bold' },
-              -- inactive = { fg = '#88AAFF', bg = 'PURPLE'},
-          },
-          symbols = {
-              modified = ' ●',
-              alternate_file = '',
-              directory = ''
+               mode = 2, -- 0: Shows buffer name
+                         -- 1: Shows buffer index
+                         -- 2: Shows buffer name + buffer index
+                         -- 3: Shows buffer number
+                         -- 4: Shows buffer name + buffer number
+              max_length = vim.o.columns, -- Maximum width of buffers component
+              use_mode_colors = false,
+              buffers_color = {
+                  active = { fg = colors.magenta, bg = colors.bg, gui='bold' },
+                  inactive = { fg = colors.violet, bg = colors.bg },
+              },
+              symbols = {
+                  modified = ' ●',
+                  alternate_file = '',
+                  directory = ''
+              }
           }
       }
-  },
-  lualine_b = {},
-  lualine_c = {},
-  lualine_x = {},
-  lualine_y = {},
-  lualine_z = {}
   }
 }
 
@@ -139,7 +101,39 @@ local function ins_right(component)
   table.insert(config.sections.lualine_x, component)
 end
 
--- ins_left 
+ins_left {
+  -- mode component
+  function()
+    return ''
+  end,
+  color = function()
+    -- auto change color according to neovims mode
+    local mode_color = {
+      n = colors.red,
+      i = colors.green,
+      v = colors.blue,
+      [''] = colors.blue,
+      V = colors.blue,
+      c = colors.magenta,
+      no = colors.red,
+      s = colors.orange,
+      S = colors.orange,
+      [''] = colors.orange,
+      ic = colors.yellow,
+      R = colors.violet,
+      Rv = colors.violet,
+      cv = colors.red,
+      ce = colors.red,
+      r = colors.cyan,
+      rm = colors.cyan,
+      ['r?'] = colors.cyan,
+      ['!'] = colors.red,
+      t = colors.red,
+    }
+    return { fg = mode_color[vim.fn.mode()] }
+  end,
+  padding = { left = 1, right = 1 },
+}
 
 ins_left {
   -- filesize component
@@ -152,10 +146,6 @@ ins_left {
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = 'bold' },
 }
-
-ins_left { 'location' }
-
-ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
 
 ins_left {
   'diagnostics',
@@ -177,57 +167,39 @@ ins_left {
 }
 
 ins_left {
-  -- Lsp server name .
-  function()
-    local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-    local clients = vim.lsp.get_clients()
-    if next(clients) == nil then
-      return msg
-    end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
-    end
-    return msg
-  end,
-  icon = ' LSP:',
-  color = { fg = '#ffffff', gui = 'bold' },
-}
-
--- Add components to right sections
-ins_right {
-  'o:encoding', -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
-  cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = 'bold' },
+      'lsp_status',
+      icon = '',
+      symbols = {
+        spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+        done = '✓',
+        separator = ' ',
+      },
+      color = { fg = colors.orange },
+      ignore_lsp = {},
+      show_name = true,
 }
 
 ins_right {
   'fileformat',
-  fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
   color = { fg = colors.green, gui = 'bold' },
 }
 
 ins_right {
   'branch',
-  icon = '',
+  -- icon = '',
   color = { fg = colors.violet, gui = 'bold' },
 }
 
 ins_right {
   'diff',
   -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+  symbols = { added = ' ',  modified = '󰝤 ', removed = ' ' },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
     removed = { fg = colors.red },
   },
-  cond = conditions.hide_in_width,
 }
 
+-- Now don't forget to initialize lualine
 lualine.setup(config)
