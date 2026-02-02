@@ -36,12 +36,12 @@ require("lazy").setup({
           "nvim-lualine/lualine.nvim",
           dependencies = { 'nvim-tree/nvim-web-devicons' },
          },
+
          {
             "tpope/vim-commentary",
-            event = "VeryLazy",  -- lazy load on first file open
-            -- gcc for single line toggle commenting
-            -- gc for visual selection and toggle commenting
+            event = "VeryLazy",
          },
+
          {
             "folke/which-key.nvim",
             enabled = false,
@@ -79,6 +79,7 @@ require("lazy").setup({
                 -- Example keybinding registration
                 local wk = require("which-key")
                  wk.register({
+                    r = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Reformat Code" },
                     f = {
                         name = "File",
                         f = "Find File",
@@ -237,6 +238,7 @@ require("lazy").setup({
           "L3MON4D3/LuaSnip",
         },
       },
+
       {
          "windwp/nvim-autopairs",
             event = "InsertEnter",
