@@ -98,6 +98,7 @@ require("lazy").setup({
                 -- Example keybinding registration
                 local wk = require("which-key")
                  wk.register({
+                    r = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Reformat Code" },
                     f = {
                         name = "File",
                         f = "Find File",

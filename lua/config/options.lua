@@ -22,3 +22,5 @@ vim.o.mouse = "a"
 
 vim.opt.termguicolors = true -- for file, folder icons
 vim.cmd.colorscheme("delek") -- picked from default theme list of neovim
+
+vim.opt.clipboard = "unnamedplus"
