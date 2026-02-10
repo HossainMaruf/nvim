@@ -3,8 +3,27 @@ vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy.nvim")
 require("lazy").setup({
     -- Need to install Nerd Font (Fira, Cascaydia etc) for working icons
     {
+      'nvimdev/dashboard-nvim',
+      event = 'VimEnter',
+      config = function()
+        require('dashboard').setup {
+            config = {
+                header = {
+                    '███╗   ███╗ █████╗ ██████╗ ██╗   ██╗███████╗',
+                    '████╗ ████║██╔══██╗██╔══██╗██║   ██║██╔════╝',
+                    '██╔████╔██║███████║██████╔╝██║   ██║█████╗  ',
+                    '██║╚██╔╝██║██╔══██║██╔══██╗██║   ██║██╔══╝  ',
+                    '██║ ╚═╝ ██║██║  ██║██║  ██║╚██████╔╝██║     ',
+                    '╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     '
+                },
+            }
+        }
+      end,
+    },
+
+    {
         "nvim-tree/nvim-web-devicons",
-        config = function()
+       config = function()
             require("nvim-web-devicons").setup({
                 default = true;
             })
@@ -36,12 +55,12 @@ require("lazy").setup({
           "nvim-lualine/lualine.nvim",
           dependencies = { 'nvim-tree/nvim-web-devicons' },
          },
+
          {
             "tpope/vim-commentary",
-            event = "VeryLazy",  -- lazy load on first file open
-            -- gcc for single line toggle commenting
-            -- gc for visual selection and toggle commenting
+            event = "VeryLazy",
          },
+
          {
             "folke/which-key.nvim",
             enabled = false,
@@ -231,12 +250,17 @@ require("lazy").setup({
 
       -- Autocompletion
       {
+          -- "hrsh7th/cmp-nvim-lsp",
+        -- 'hrsh7th/cmp-buffer',
+        -- 'hrsh7th/cmp-path',
+        -- 'hrsh7th/cmp-cmdline',
         "hrsh7th/nvim-cmp",
         dependencies = {
           "hrsh7th/cmp-nvim-lsp",
           "L3MON4D3/LuaSnip",
         },
       },
+
       {
          "windwp/nvim-autopairs",
             event = "InsertEnter",
